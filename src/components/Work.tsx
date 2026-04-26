@@ -1,0 +1,248 @@
+import { useState, useCallback } from "react";
+import "./styles/Work.css";
+import WorkImage from "./WorkImage";
+import WorkProjectGallery from "./WorkProjectGallery";
+import { MdArrowBack, MdArrowForward } from "react-icons/md";
+
+type Project = {
+  title: string;
+  company: string;
+  domain: string;
+  tools: string;
+  responsibilities: string[];
+  /** Main / fallback image when `images` is not set */
+  image: string;
+  /** Optional gallery (e.g. TotalMed+ product screenshots) */
+  images?: string[];
+  link?: string;
+};
+
+const totalmedScreens = [
+  "/images/totalmed/01.png",
+  "/images/totalmed/02.png",
+  "/images/totalmed/03.png",
+  "/images/totalmed/04.png",
+  "/images/totalmed/05.png",
+  "/images/totalmed/06.png",
+  "/images/totalmed/07.png",
+];
+
+const scrubSocietyScreens = [
+  "/images/scrub-society/01.png",
+  "/images/scrub-society/02.png",
+  "/images/scrub-society/03.png",
+  "/images/scrub-society/04.png",
+  "/images/scrub-society/05.png",
+  "/images/scrub-society/06.png",
+  "/images/scrub-society/07.png",
+  "/images/scrub-society/08.png",
+  "/images/scrub-society/09.png",
+  "/images/scrub-society/10.png",
+  "/images/scrub-society/11.png",
+  "/images/scrub-society/12.png",
+];
+
+// Screens from https://store.mycarecrew.co/ (home, Our Story, all products, search)
+const myCareCrewScreens = [
+  "/images/mycarecrew/01.png",
+  "/images/mycarecrew/03.png",
+  "/images/mycarecrew/04.png",
+  "/images/mycarecrew/05.png",
+];
+
+/** Aligned with CV (Projects section) */
+const projects: Project[] = [
+  {
+    title: "Staffbot (TotalMed+)",
+    company: "Inheritx Solutions Pvt. Ltd.",
+    domain: "Healthcare job marketplace",
+    tools:
+      "Selenium WebDriver, Playwright, Postman, Apache JMeter, BrowserStack, Salesforce Lightning",
+    responsibilities: [
+      "Test case design and execution for web and mobile.",
+      "Critical regression through UI automation; API and backend checks.",
+      "Salesforce Lightning: ATS workflows and related UI validation.",
+      "Load and performance test runs for key flows.",
+    ],
+    image: totalmedScreens[0],
+    images: totalmedScreens,
+    link: "https://app.totalmedplus.com/",
+  },
+  {
+    title: "Scrub Society",
+    company: "Inheritx Solutions Pvt. Ltd.",
+    domain: "Travel & per diem jobs, community, and professional profiles (healthcare)",
+    tools:
+      "Selenium WebDriver, Playwright, Postman, Apache JMeter, BrowserStack, Salesforce (ATS integrations where applicable)",
+    responsibilities: [
+      "Test planning and runs for job search, listings, state-based browse, and advanced filters.",
+      "Functional and regression on job details, pay and stipend logic, and apply experience.",
+      "Profile and credentials (licenses, work history, resume/AI) plus navigation, resources, and employer areas; API, automated UI, compatibility, and performance as needed.",
+    ],
+    image: scrubSocietyScreens[0],
+    images: scrubSocietyScreens,
+    link: "https://scrubsociety.com/",
+  },
+  {
+    title: "My CareCrew",
+    company: "Hyperlink Info-System",
+    domain:
+      "E-commerce (Shopify) — products for patients & caregivers, collections, and search",
+    tools: "Selenium WebDriver, Selenium IDE, Postman, BrowserStack",
+    responsibilities: [
+      "Test cases; functional, regression, smoke, sanity, and exploratory coverage.",
+      "API validation, cross-browser, and responsive testing.",
+    ],
+    image: myCareCrewScreens[0],
+    images: myCareCrewScreens,
+    link: "https://store.mycarecrew.co/",
+  },
+];
+
+const Work = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  const goToSlide = useCallback(
+    (index: number) => {
+      if (isAnimating) return;
+      setIsAnimating(true);
+      setCurrentIndex(index);
+      setTimeout(() => setIsAnimating(false), 500);
+    },
+    [isAnimating]
+  );
+
+  const goToPrev = useCallback(() => {
+    const newIndex =
+      currentIndex === 0 ? projects.length - 1 : currentIndex - 1;
+    goToSlide(newIndex);
+  }, [currentIndex, goToSlide]);
+
+  const goToNext = useCallback(() => {
+    const newIndex =
+      currentIndex === projects.length - 1 ? 0 : currentIndex + 1;
+    goToSlide(newIndex);
+  }, [currentIndex, goToSlide]);
+
+  return (
+    <div className="work-section" id="work">
+      <div className="work-container section-container">
+        <h2>
+          My <span>Work</span>
+        </h2>
+
+        <div className="carousel-wrapper">
+          {/* Navigation Arrows */}
+          <button
+            className="carousel-arrow carousel-arrow-left"
+            onClick={goToPrev}
+            aria-label="Previous project"
+            data-cursor="disable"
+          >
+            <MdArrowBack />
+          </button>
+          <button
+            className="carousel-arrow carousel-arrow-right"
+            onClick={goToNext}
+            aria-label="Next project"
+            data-cursor="disable"
+          >
+            <MdArrowForward />
+          </button>
+
+          {/* Slides */}
+          <div className="carousel-track-container">
+            <div
+              className="carousel-track"
+              style={{
+                /* Total width n× viewport: each flex child is 100/n % of the track
+                   = one full container width, so one project shows at a time. */
+                width: `${projects.length * 100}%`,
+                transform: `translateX(calc(-100% * ${currentIndex} / ${projects.length}))`,
+              }}
+            >
+              {projects.map((project, index) => (
+                <div
+                  className="carousel-slide"
+                  key={index}
+                  style={{ flex: `0 0 calc(100% / ${projects.length})` }}
+                >
+                  <div className="carousel-content">
+                    <div className="carousel-info">
+                      <div className="carousel-number">
+                        <h3>0{index + 1}</h3>
+                      </div>
+                      <div className="carousel-details">
+                        <h4>{project.title}</h4>
+                        <p className="carousel-company">{project.company}</p>
+                        {project.link ? (
+                          <p className="carousel-project-link">
+                            <a
+                              href={project.link}
+                              target="_blank"
+                              rel="noreferrer"
+                              data-cursor="disable"
+                            >
+                              View live site
+                            </a>
+                          </p>
+                        ) : null}
+                        <p className="carousel-domain">
+                          <span className="carousel-meta-label">Domain</span>{" "}
+                          {project.domain}
+                        </p>
+                        <div className="carousel-tools">
+                          <span className="tools-label">Tools &amp; technologies</span>
+                          <p className="carousel-tools-line">{project.tools}</p>
+                        </div>
+                        <div className="carousel-rnr">
+                          <span className="tools-label">Roles &amp; responsibilities</span>
+                          <ul>
+                            {project.responsibilities.map((line) => (
+                              <li key={line}>{line}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="carousel-image-wrapper">
+                      {project.images && project.images.length > 0 ? (
+                        <WorkProjectGallery
+                          images={project.images}
+                          projectTitle={project.title}
+                        />
+                      ) : (
+                        <WorkImage
+                          image={project.image}
+                          alt={project.title}
+                          link={project.link}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Dot Indicators */}
+          <div className="carousel-dots">
+            {projects.map((_, index) => (
+              <button
+                key={index}
+                className={`carousel-dot ${index === currentIndex ? "carousel-dot-active" : ""
+                  }`}
+                onClick={() => goToSlide(index)}
+                aria-label={`Go to project ${index + 1}`}
+                data-cursor="disable"
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Work;

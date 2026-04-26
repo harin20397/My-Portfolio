@@ -1,0 +1,108 @@
+.work-project-gallery {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 0 2px;
+}
+
+.work-project-gallery__frame {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  border-radius: 10px;
+  /* Don’t clip wide screenshots: flex was forcing overflow; contain scales image instead */
+  overflow: visible;
+  background: #0f1419;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+.work-project-gallery__frame img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  max-height: min(420px, 52vh);
+  object-fit: contain;
+  object-position: top left;
+  border-radius: 9px;
+}
+
+.work-project-gallery__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 0 6px;
+}
+
+.work-project-gallery__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  color: #eae5ec;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.work-project-gallery__btn:hover {
+  background: rgba(94, 234, 212, 0.12);
+  border-color: rgba(94, 234, 212, 0.4);
+}
+
+.work-project-gallery__count {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: #9ca3af;
+  min-width: 3.5em;
+  text-align: center;
+}
+
+.work-project-gallery__dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  max-width: 100%;
+  padding: 0 4px;
+}
+
+.work-project-gallery__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.work-project-gallery__dot--active {
+  background: var(--accentColor);
+  border-color: var(--accentColor);
+  transform: scale(1.15);
+}
+
+@media only screen and (max-width: 768px) {
+  .work-project-gallery__frame img {
+    max-height: 38vh;
+  }
+}

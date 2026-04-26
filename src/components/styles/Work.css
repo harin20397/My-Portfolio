@@ -1,0 +1,389 @@
+/* ── Work Section ── */
+.work-section {
+  position: relative;
+  z-index: 1;
+  background-color: var(--backgroundColor);
+  padding: 80px 0;
+}
+
+.work-section h2 {
+  font-size: 70px;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 50px;
+}
+
+.work-section h2>span {
+  color: var(--accentColor);
+}
+
+.work-container {
+  margin: auto;
+}
+
+/* ── Carousel ── */
+/* Arrows (absolute) are positioned against this box — horizontal padding must
+   be ≥ ~half the button size (e.g. 0.5rem on ≤1400px) or the right circle clips. */
+.carousel-wrapper {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 0 clamp(2.75rem, 4.5vw, 4.25rem);
+  box-sizing: border-box;
+}
+
+.carousel-track-container {
+  /* isolate so nested overflow/transforms don’t mix with other sections */
+  isolation: isolate;
+  overflow: hidden;
+  width: 100%;
+  border-top: 1px solid #363636;
+  border-bottom: 1px solid #363636;
+}
+
+.carousel-track {
+  display: flex;
+  /* width set inline: n * 100% of .carousel-track-container; don’t set 100% here */
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.carousel-slide {
+  /* flex: 0 0 (100/n)% set on the element in Work.tsx — n equal slices of the track */
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 50px 0;
+  min-height: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.carousel-content {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.carousel-info {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.carousel-number h3 {
+  font-size: 60px;
+  line-height: 1;
+  margin: 0;
+  font-weight: 600;
+  opacity: 0.3;
+}
+
+.carousel-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 36rem;
+  min-width: 0;
+}
+
+.carousel-details h4 {
+  font-size: 28px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.carousel-company {
+  font-weight: 500;
+  color: #c8c6ce;
+  margin: 0;
+  font-size: 15px;
+}
+
+.carousel-project-link {
+  margin: 4px 0 0;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.carousel-project-link a {
+  color: var(--accentColor);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.carousel-project-link a:hover {
+  opacity: 0.9;
+}
+
+.carousel-domain {
+  font-weight: 300;
+  color: #adacac;
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+.carousel-meta-label {
+  font-weight: 500;
+  color: var(--accentColor);
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-right: 0.15rem;
+}
+
+.carousel-tools {
+  margin-top: 12px;
+}
+
+.carousel-tools .tools-label,
+.carousel-rnr .tools-label {
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.6;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.carousel-tools-line {
+  font-weight: 300;
+  color: #c8c6ce;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+
+.carousel-rnr {
+  margin-top: 14px;
+}
+
+.carousel-rnr ul {
+  margin: 6px 0 0;
+  padding: 0 0 0 1.1rem;
+  list-style: disc;
+  color: #adacac;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+.carousel-rnr li {
+  margin: 0.35rem 0;
+  padding-left: 0.15rem;
+}
+
+.carousel-image-wrapper {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* ── Navigation Arrows ── */
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #eae5ec;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(8px);
+}
+
+.carousel-arrow:hover {
+  background: rgba(94, 234, 212, 0.15);
+  border-color: var(--accentColor);
+  color: var(--accentColor);
+  box-shadow: 0 0 20px rgba(94, 234, 212, 0.15);
+}
+
+/* Inset from padded wrapper so the full circle stays inside the column (no half-off-screen) */
+.carousel-arrow-left {
+  left: 0.5rem;
+}
+
+.carousel-arrow-right {
+  right: 0.5rem;
+}
+
+/* ── Dot Indicators ── */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 35px;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+}
+
+.carousel-dot:hover {
+  border-color: var(--accentColor);
+  background: rgba(94, 234, 212, 0.2);
+}
+
+.carousel-dot-active {
+  background: var(--accentColor);
+  border-color: var(--accentColor);
+  box-shadow: 0 0 8px rgba(94, 234, 212, 0.4);
+}
+
+/* ── Work Image (reused) ── */
+.work-image {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+}
+
+.work-image-in {
+  position: relative;
+}
+
+.work-link {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: var(--backgroundColor);
+  width: 50px;
+  border-radius: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  box-shadow: 0px 0px 10px 0px rgba(255, 255, 255, 0.5),
+    inset 0px 0px 10px 0px #393939;
+  transition: 0.3s;
+  opacity: 0;
+}
+
+.work-image a:hover {
+  color: inherit;
+}
+
+.work-image a:hover .work-link {
+  opacity: 1;
+}
+
+.work-image video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  object-fit: cover;
+}
+
+.work-image img {
+  max-width: 100%;
+  max-height: 400px;
+  border-radius: 8px;
+}
+
+/* ── Responsive ── */
+@media only screen and (max-width: 1400px) {
+  .work-section h2 {
+    font-size: 50px;
+  }
+
+  .carousel-details h4 {
+    font-size: 22px;
+  }
+
+  .carousel-number h3 {
+    font-size: 45px;
+  }
+
+  .carousel-content {
+    gap: 40px;
+  }
+
+  .carousel-wrapper {
+    padding: 0 clamp(1.75rem, 5vw, 2.5rem);
+  }
+}
+
+@media only screen and (max-width: 1025px) {
+  .carousel-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .carousel-info {
+    width: 100%;
+  }
+
+  .carousel-image-wrapper {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .work-section {
+    padding: 50px 0;
+  }
+
+  .work-section h2 {
+    font-size: 40px;
+    margin-bottom: 30px;
+  }
+
+  .carousel-number h3 {
+    font-size: 35px;
+  }
+
+  .carousel-details h4 {
+    font-size: 20px;
+  }
+
+  .carousel-content {
+    gap: 20px;
+  }
+
+  .carousel-slide {
+    padding: 30px 0;
+  }
+
+  .work-image img {
+    max-height: 250px;
+  }
+}
