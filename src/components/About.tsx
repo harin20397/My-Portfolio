@@ -32,7 +32,7 @@ const About = () => {
 
   return (
     <div className="about-section" id="about" ref={sectionRef}>
-      <div className="about-me">
+      <div className={`about-me ${roleVisible ? "about-me--visible" : ""}`}>
         <h3 className="title">About Me</h3>
         <p
           className={
@@ -43,15 +43,10 @@ const About = () => {
           Senior Quality Analyst · Ahmedabad, Gujarat · 5+ years
         </p>
         <p className="para">
-          I am a Senior Quality Analyst focused on building confidence in web and
-          mobile releases through thoughtful test planning, sharp requirement
-          analysis, and clear communication across product, development, and client
-          teams.
+          I am a <span className="about-highlight">Senior Quality Analyst</span> focused on building confidence in <span className="about-highlight">web and mobile releases</span> through thoughtful test planning, sharp requirement analysis, and clear communication across product, development, and client teams.
         </p>
         <p className="para about-para-tight">
-          My work blends manual testing, automation, API checks, defect analysis,
-          and release support, with the detailed tools and project coverage outlined
-          in the sections below.
+          My work blends <span className="about-highlight">manual testing</span>, <span className="about-highlight">automation</span>, <span className="about-highlight">API checks</span>, defect analysis, and release support, with the detailed tools and project coverage outlined in the sections below.
         </p>
       </div>
     </div>

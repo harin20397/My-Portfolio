@@ -41,10 +41,33 @@
   font-weight: 500;
 }
 .navbar-title {
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 0.2px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  cursor: pointer;
 }
+.navbar-logo-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0d9488, #5eead4);
+  color: #050810;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 10px rgba(94, 234, 212, 0.2);
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  user-select: none;
+}
+.navbar-title:hover .navbar-logo-badge {
+  transform: rotate(360deg) scale(1.08);
+  box-shadow: 0 0 20px rgba(94, 234, 212, 0.6);
+}
+
 @media only screen and (min-width: 500px) {
   .header {
     padding: 20px 0px;
@@ -57,9 +80,7 @@
   .header ul li {
     color: #eae5ec;
   }
-  .navbar-title {
-    font-size: 16px;
-  }
+
 }
 @media only screen and (min-width: 900px) {
   .navbar-connect {
@@ -77,7 +98,5 @@
   .navbar-connect {
     font-size: 16px;
   }
-  .navbar-title {
-    font-size: 18px;
-  }
+
 }

@@ -35,6 +35,19 @@ const Navbar = () => {
         }
       });
     });
+
+    let logo = document.querySelector(".navbar-title");
+    if (logo) {
+      logo.addEventListener("click", (e) => {
+        e.preventDefault();
+        if (window.innerWidth > 1024) {
+          smoother.scrollTo("#landingDiv", true, "top top");
+        } else {
+          document.getElementById("landingDiv")?.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    }
+
     window.addEventListener("resize", () => {
       ScrollSmoother.refresh(true);
     });
@@ -42,8 +55,8 @@ const Navbar = () => {
   return (
     <>
       <div className="header">
-        <a href="/#" className="navbar-title" data-cursor="disable">
-          HP
+        <a href="#landingDiv" className="navbar-title" data-cursor="disable">
+          <div className="navbar-logo-badge">HP</div>
         </a>
         <a
           href="https://www.linkedin.com/in/harin-patel-ab9856150"

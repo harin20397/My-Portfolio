@@ -72,11 +72,24 @@
   font-weight: 600;
 }
 
-.about-me p {
+.about-me p.para {
   font-size: 33px;
   font-weight: 600;
   line-height: 36px;
   letter-spacing: 1px;
+  opacity: 0.3;
+  color: #8892b0;
+  transform: translateY(15px);
+  transition:
+    opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    transform 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+    color 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.about-me--visible p.para {
+  opacity: 1;
+  color: #eae5ec;
+  transform: translateY(0);
 }
 
 @media only screen and (min-width: 600px) {
@@ -107,13 +120,13 @@
     padding: 0px;
     width: 50%;
   }
-  .about-me p {
+  .about-me p.para {
     font-size: 1.9vw;
     line-height: 2.3vw;
   }
 }
 @media only screen and (min-width: 1950px) {
-  .about-me p {
+  .about-me p.para {
     font-size: 2.5rem;
     line-height: 2.7rem;
   }

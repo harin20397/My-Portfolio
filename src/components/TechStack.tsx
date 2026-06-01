@@ -3,6 +3,7 @@ import { useRef, useMemo, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment } from "@react-three/drei";
 import { EffectComposer, N8AO } from "@react-three/postprocessing";
+import { getAssetUrl } from "../utils/resolveAsset";
 import {
   BallCollider,
   Physics,
@@ -30,7 +31,7 @@ const QA_TEXTURE_URLS = [
   "/images/qa/jenkins_jenkins-line.svg",
   "/images/qa/github_github-original.svg",
   "/images/qa/githubactions_githubactions-original.svg",
-];
+].map(getAssetUrl);
 
 const textures = QA_TEXTURE_URLS.map((url) => {
   const tex = textureLoader.load(url);
@@ -215,7 +216,7 @@ const TechStack = () => {
           ))}
         </Physics>
         <Environment
-          files="/models/char_enviorment.hdr"
+          files={getAssetUrl("/models/char_enviorment.hdr")}
           environmentIntensity={0.5}
           environmentRotation={[0, 4, 2]}
         />

@@ -3,6 +3,7 @@ import "./styles/Work.css";
 import WorkImage from "./WorkImage";
 import WorkProjectGallery from "./WorkProjectGallery";
 import { MdArrowBack, MdArrowForward } from "react-icons/md";
+import { getAssetUrl } from "../utils/resolveAsset";
 
 type Project = {
   title: string;
@@ -96,6 +97,71 @@ const projects: Project[] = [
     image: myCareCrewScreens[0],
     images: myCareCrewScreens,
     link: "https://store.mycarecrew.co/",
+  },
+  {
+    title: "Bond (FinTech & Credit)",
+    company: "Hyperlink Info-System",
+    domain: "FinTech SaaS – digital banking, credit builder programs, and card issuing APIs",
+    tools: "Postman, Playwright API Testing, Selenium WebDriver, Apache JMeter, AWS CloudWatch",
+    responsibilities: [
+      "Tested core digital banking APIs (account creation, card issuing, KYC flows) using Postman and Playwright.",
+      "Validated credit reporting data generation and card authorization transactions.",
+      "Performed load and performance testing on money transfer endpoints using Apache JMeter.",
+      "Collaborated with development to verify payment gateway integrations and PCI-DSS compliance.",
+    ],
+    image: "/images/bond.png",
+  },
+  {
+    title: "Broki (Real Estate CRM)",
+    company: "Inheritx Solutions Pvt. Ltd.",
+    domain: "PropTech SaaS – real estate CRM, MLS property feed sync, and e-signing workflows",
+    tools: "Selenium WebDriver, TestNG, RestAssured, Jenkins, AWS S3, BrowserStack",
+    responsibilities: [
+      "Designed automated regression suites for broker workflows, agent lead tracking, and dashboard reporting.",
+      "Tested MLS listing sync cron-jobs to ensure real-time accuracy of property data feeds.",
+      "Validated e-sign compliance, document rendering, and secure audit trail logging stored on AWS S3.",
+      "Conducted cross-browser compatibility testing via BrowserStack.",
+    ],
+    image: "/images/broki.png",
+  },
+  {
+    title: "Orrdr (Food Delivery & Logistics)",
+    company: "Arth I-Soft",
+    domain: "Logistics & FoodTech – consumer ordering app, restaurant dashboard, and driver dispatch engine",
+    tools: "Appium (iOS & Android), Playwright, Postman, Google Maps API, BrowserStack",
+    responsibilities: [
+      "Automated mobile app regressions using Appium across Android and iOS platforms.",
+      "Tested real-time order tracking, merchant notifications, and webhook-triggered dispatch routing.",
+      "Simulated geolocation events to validate ETA calculation logic and driver mapping.",
+      "Conducted end-to-end payment gateway validation (Stripe, wallets) and checkout flow optimization.",
+    ],
+    image: "/images/orrdr.png",
+  },
+  {
+    title: "MaxLife Insurance (Salesforce CRM)",
+    company: "Inheritx Solutions Pvt. Ltd.",
+    domain: "InsurTech / Salesforce CRM – agent enablement, policy booking, claim workflows, and customer onboarding",
+    tools: "Salesforce Lightning, Selenium WebDriver, Playwright, Postman, Jira",
+    responsibilities: [
+      "Validated custom Salesforce Lightning Web Components (LWC), page layouts, and multi-step policy creation wizards.",
+      "Developed automated regressions using Selenium for end-to-end policy onboarding workflows.",
+      "Validated API integrations between Salesforce Financial Services Cloud and core underwriting backend systems.",
+      "Tested user profiles, security matrices, sharing rules, and approval hierarchies for claims agents.",
+    ],
+    image: "/images/Maxlife.png",
+  },
+  {
+    title: "Sapphire Retail (Salesforce Commerce)",
+    company: "Hyperlink Info-System",
+    domain: "E-commerce / Retail – B2C store, order management (OMS), and loyalty programs on Salesforce Commerce Cloud",
+    tools: "Salesforce Commerce Cloud, Playwright, Postman, BrowserStack, Apache JMeter",
+    responsibilities: [
+      "Automated storefront checkout, payment processing, and catalog search flows using Playwright.",
+      "Tested Salesforce Order Management System (OMS) workflows including order capture, fulfillment, and refund logic.",
+      "Conducted load testing on catalog search and product detail APIs using Apache JMeter.",
+      "Validated data mapping and integration syncs between Salesforce CRM and external ERP systems.",
+    ],
+    image: "/images/sapphire.png",
   },
 ];
 
@@ -209,12 +275,12 @@ const Work = () => {
                     <div className="carousel-image-wrapper">
                       {project.images && project.images.length > 0 ? (
                         <WorkProjectGallery
-                          images={project.images}
+                          images={project.images.map(getAssetUrl)}
                           projectTitle={project.title}
                         />
                       ) : (
                         <WorkImage
-                          image={project.image}
+                          image={getAssetUrl(project.image)}
                           alt={project.title}
                           link={project.link}
                         />
