@@ -13,6 +13,7 @@ import {
 } from "@react-three/rapier";
 
 const textureLoader = new THREE.TextureLoader();
+textureLoader.setCrossOrigin("");
 
 /** QA & test tooling — textures match the caption below the canvas */
 const QA_TEXTURE_URLS = [
@@ -31,7 +32,17 @@ const QA_TEXTURE_URLS = [
   "/images/qa/jenkins_jenkins-line.svg",
   "/images/qa/github_github-original.svg",
   "/images/qa/githubactions_githubactions-original.svg",
-].map(getAssetUrl);
+  "/images/qa/cypress_cypressio-original.svg",
+  "/images/qa/cucumber_cucumber-plain.svg",
+  "/images/qa/junit_junit-original.svg",
+  "/images/qa/docker_docker-original.svg",
+  "/images/qa/sonarqube_sonarqube-original.svg",
+  "/images/qa/gitlab_gitlab-original.svg",
+  "/images/qa/appium_logo.svg",
+  "/images/qa/katalon_logo.svg",
+  "/images/qa/kubernetes_logo.svg",
+  "/images/qa/pytest_logo.svg",
+].map((url) => getAssetUrl(url) + "?v=1");
 
 const textures = QA_TEXTURE_URLS.map((url) => {
   const tex = textureLoader.load(url);

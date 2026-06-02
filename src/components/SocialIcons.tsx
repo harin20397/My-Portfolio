@@ -13,16 +13,28 @@ import { getAssetUrl } from "../utils/resolveAsset";
 const SocialIcons = () => {
   useEffect(() => {
     const social = document.getElementById("social") as HTMLElement;
+    if (!social) return;
+
+    const cleanups: (() => void)[] = [];
 
     social.querySelectorAll("span").forEach((item) => {
       const elem = item as HTMLElement;
       const link = elem.querySelector("a") as HTMLElement;
+      if (!link) return;
 
-      const rect = elem.getBoundingClientRect();
-      let mouseX = rect.width / 2;
-      let mouseY = rect.height / 2;
-      let currentX = 0;
-      let currentY = 0;
+      let rect = elem.getBoundingClientRect();
+      const defaultWidth = rect.width || 50;
+      const defaultHeight = rect.height || 50;
+
+      let mouseX = defaultWidth / 2;
+      let mouseY = defaultHeight / 2;
+      let currentX = defaultWidth / 2;
+      let currentY = defaultHeight / 2;
+      let animationFrameId: number;
+
+      // Set initial variables to center the icon inside the span
+      link.style.setProperty("--siLeft", `${currentX}px`);
+      link.style.setProperty("--siTop", `${currentY}px`);
 
       const updatePosition = () => {
         currentX += (mouseX - currentX) * 0.1;
@@ -31,7 +43,11 @@ const SocialIcons = () => {
         link.style.setProperty("--siLeft", `${currentX}px`);
         link.style.setProperty("--siTop", `${currentY}px`);
 
-        requestAnimationFrame(updatePosition);
+        animationFrameId = requestAnimationFrame(updatePosition);
+      };
+
+      const onMouseEnter = () => {
+        rect = elem.getBoundingClientRect();
       };
 
       const onMouseMove = (e: MouseEvent) => {
@@ -42,19 +58,33 @@ const SocialIcons = () => {
           mouseX = x;
           mouseY = y;
         } else {
-          mouseX = rect.width / 2;
-          mouseY = rect.height / 2;
+          mouseX = rect.width / 2 || 25;
+          mouseY = rect.height / 2 || 25;
         }
       };
 
-      document.addEventListener("mousemove", onMouseMove);
+      const onMouseLeave = () => {
+        mouseX = rect.width / 2 || 25;
+        mouseY = rect.height / 2 || 25;
+      };
+
+      elem.addEventListener("mouseenter", onMouseEnter);
+      elem.addEventListener("mousemove", onMouseMove);
+      elem.addEventListener("mouseleave", onMouseLeave);
 
       updatePosition();
 
-      return () => {
+      cleanups.push(() => {
+        elem.removeEventListener("mouseenter", onMouseEnter);
         elem.removeEventListener("mousemove", onMouseMove);
-      };
+        elem.removeEventListener("mouseleave", onMouseLeave);
+        cancelAnimationFrame(animationFrameId);
+      });
     });
+
+    return () => {
+      cleanups.forEach((cleanup) => cleanup());
+    };
   }, []);
 
   return (

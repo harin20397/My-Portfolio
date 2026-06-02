@@ -30,6 +30,7 @@
   height: 50px;
   position: relative;
   display: flex;
+  flex-shrink: 0;
 }
 .social-icons a {
   --siLeft: 50%;
